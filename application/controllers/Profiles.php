@@ -42,21 +42,21 @@ class Profiles extends CI_Controller {
 			$this->index();
 		}
 		else
-		{
-			die('made it');
-			$user = $this->user->find_user_dashboard($this->input->post());
+		{	
+			$post = $this->input->post();
+			$post['password'] = $post['current_password'];
+			unset($post['confirm_new_password']);
+			unset($post['confirm_current_password']);
+			unset($post['current_password']);
+			$user = $this->user->find_user_dashboard($post);
 			if($user)
 			{
-				$post = $this->input->post();
-				unset($post['confirm_password']);
-				unset($post['confirm_new_password']);
-				$this->user->update_user($post);
-				$this->session->set_userdata('name', $post['first_name'] . " " . $post['last_name']);
-				$this->session->set_flashdata('update_success', 'You have successfully updated your profile');
+				$this->user->update_password($post);
+				$this->session->set_flashdata('update_success', 'You have successfully updated your password');
 			}
 			else
 			{
-				$this->session->set_flashdata('update_error','Incorrect Password');
+				$this->session->set_flashdata('password_update_error','Incorrect Password');
 			}
 			redirect("/profile");
 		}

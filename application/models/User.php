@@ -39,6 +39,22 @@ class User extends CI_Model {
 		}
 	}
 
+		public function validate_admin_update($post)
+	{
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('first_name','First Name','required|trim|ucwords');
+		$this->form_validation->set_rules('last_name','Last Name','required|trim|ucwords');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|strtolower');
+		if($this->form_validation->run() === FALSE)
+		{
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+
 	public function validate_update_password($post)
 	{
 		$this->load->library('form_validation');
@@ -46,6 +62,21 @@ class User extends CI_Model {
 		$this->form_validation->set_rules('confirm_new_password','Confirm New Password','required');
 		$this->form_validation->set_rules('current_password','Password','required|trim|min_length[6]|matches[confirm_current_password]|md5');
 		$this->form_validation->set_rules('confirm_current_password','Confirm Password','required');
+		if($this->form_validation->run() === FALSE)
+		{
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+
+	public function validate_admin_update_password($post)
+	{
+		$this->load->library('form_validation');
+		$this->form_validation->set_rules('new_password','New Password','required|trim|min_length[6]|matches[confirm_new_password]|md5');
+		$this->form_validation->set_rules('confirm_new_password','Confirm New Password','required');
 		if($this->form_validation->run() === FALSE)
 		{
 			return FALSE;
@@ -76,6 +107,17 @@ class User extends CI_Model {
 		$values = array($post['first_name'],$post['last_name'],$post['email'],$post['description']);
 		$this->db->query($query,$values);
 	}
+
+	public function update_password($post)
+	{
+		$query = "UPDATE users
+				  SET password = ?,
+				  	  updated_at = NOW()
+				  WHERE id = {$post['user_id']}";
+		$values = array($post['new_password']);
+		$this->db->query($query,$values);
+	}
+
 
 	public function validate_login($post)
 	{

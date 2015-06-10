@@ -101,7 +101,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     {?>
                         <div class="col-md-2">
                         <div class="cell">
-                            Edit / Remove
+                            <a href="/users/edit/<?= $user['id']?>">Edit</a> / Remove
                         </div>
                     </div>
                     <?php

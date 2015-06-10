@@ -72,7 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-12">
-                                <form id="update-form" action="/update" method="post" role="form">
+                                <form id="update-form" action="/users/admin/update/<?= $user['id'] ?>" method="post" role="form">
                                     <div class="form-group">
                                         <input type="text" name="first_name" id="first_name" tabindex="1" class="form-control" placeholder="First Name" value="<?= $user['first_name'] ?>" >
                                         <?php if(form_error('first_name')){?> 
@@ -96,24 +96,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                     <div class="form-group">
                                         <textarea name="description" cols="20" rows="10" id="description" class="form-control message" style="height: 80px; overflow: hidden;" placeholder="Tell us about yourself!"><?php if($user['description']){echo $user['description'];} ?></textarea>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" name="password" id="password" tabindex="2" class="form-control" placeholder="Current Password">
-                                        <?php if(form_error('password')){?> 
-                                        <span class="help-block alert alert-danger"><?= form_error('password') ?></span> 
-                                        <?php
-                                        } ?>
-                                        <?php if($this->session->flashdata('update_error')){?> 
-                                        <span class="help-block alert alert-danger"><?= $this->session->flashdata('update_error') ?></span> 
-                                        <?php
-                                        } ?>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" name="confirm_password" id="confirm_password" tabindex="2" class="form-control" placeholder="Confirm Current Password">
-                                        <?php if(form_error('confirm_password')){?> 
-                                        <span class="help-block alert alert-danger"><?= form_error('confirm_password') ?></span> 
-                                        <?php
-                                        } ?>
                                     </div>
                                     <input type="hidden" name = "user_id" value = "<?= $this->session->userdata('id') ?>">
                                     <div class="form-group">
@@ -151,7 +133,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-lg-12">
-                                <form id="update-form" action="/updatepass" method="post" role="form">
+                                <form id="update-form" action="/users/admin/updatepassword/<?= $user['id'] ?>" method="post" role="form">
                                     <div class="form-group">
                                         <input type="password" name="new_password" id="new_password" tabindex="3" class="form-control" placeholder="New Password">
                                         <?php if(form_error('new_password')){?> 
@@ -163,24 +145,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <input type="password" name="confirm_new_password" id="confirm_new_password" tabindex="3" class="form-control" placeholder="Confirm New Password">
                                         <?php if(form_error('confirm_new_password')){?> 
                                         <span class="help-block alert alert-danger"><?= form_error('confirm_new_password') ?></span> 
-                                        <?php
-                                        } ?>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" name="current_password" id="current_password" tabindex="3" class="form-control" placeholder="Current Password">
-                                        <?php if(form_error('current_password')){?> 
-                                        <span class="help-block alert alert-danger"><?= form_error('current_password') ?></span> 
-                                        <?php
-                                        } ?>
-                                        <?php if($this->session->flashdata('password_update_error')){?> 
-                                        <span class="help-block alert alert-danger"><?= $this->session->flashdata('password_update_error') ?></span> 
-                                        <?php
-                                        } ?>
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" name="confirm_current_password" id="confirm_current_password" tabindex="3" class="form-control" placeholder="Confirm Current Password">
-                                        <?php if(form_error('confirm_current_password')){?> 
-                                        <span class="help-block alert alert-danger"><?= form_error('confirm_current_password') ?></span> 
                                         <?php
                                         } ?>
                                     </div>
