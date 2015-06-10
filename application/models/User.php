@@ -89,8 +89,8 @@ class User extends CI_Model {
 
 	public function insert_user($post)
 	{
-		$query = "INSERT INTO users(first_name, last_name, email, password, created_at, updated_at)
-				  VALUES (?,?,?,?,NOW(),NOW())";
+		$query = "INSERT INTO users(first_name, last_name, email, password, user_level, created_at, updated_at)
+				  VALUES (?,?,?,?, 'general' ,NOW(),NOW())";
 		$values = array($post['first_name'],$post['last_name'],$post['email'],$post['password']);
 		$this->db->query($query,$values);
 	}
@@ -164,5 +164,10 @@ class User extends CI_Model {
 			      FROM users";
 		$result = $this->db->query($query)->result_array();
 		return $result;
+	}
+
+	public function delete_user($id)
+	{
+		$this->db->query("DELETE FROM users WHERE id = ?", $id);
 	}
 }

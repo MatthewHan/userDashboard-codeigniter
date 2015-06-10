@@ -14,6 +14,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Bootstrap specific javascript functions -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="/assets/css/dashboard.css">
+    <script>
+    $(document).ready(function(){
+        $('#modal-dialog').on('show', function() {
+            var link = $(this).data('link'),
+            confirmBtn = $(this).find('.confirm');
+        })
+        $('#btnYes').click(function() {
+        // handle form processing here
+            alert('submit form');
+            $('form').submit();  
+        });
+    });
+    </script>
 </head>
 <body>
     <!-- Navigation -->
@@ -54,8 +67,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Page Content -->
 
     <div class="container">
-        <h2>All Users/Manage Users</h2>
+        <h2>All Users/Manage Users <a href = "/users/add/new" class="btn btn-success pull-right">Add New User</a></h2>
         <div class="method">
+            <?php if($this->session->flashdata('delete_success')){?> 
+            <span class="help-block alert alert-success"><?= $this->session->flashdata('delete_success') ?></span> 
+            <?php
+            }?>
+            <?php if($this->session->flashdata('update_success')){?> 
+            <span class="help-block alert alert-success"><?= $this->session->flashdata('update_success') ?></span> 
+            <?php
+            }?>
             <div class="row margin-0 list-header hidden-sm hidden-xs">
                 <div class="col-md-1"><div class="header">ID</div></div>
                 <div class="col-md-2"><div class="header">Name</div></div>
@@ -99,9 +120,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div>
                     <?php if($this->session->userdata['user_level']=='admin')
                     {?>
-                        <div class="col-md-2">
+                    <div class="col-md-2">
                         <div class="cell">
-                            <a href="/users/edit/<?= $user['id']?>">Edit</a> / Remove
+                            <a href="/users/edit/<?= $user['id']?>">Edit</a> / <a href="#modal-dialog<?= $user['id']?>" class="modal-toggle" data-toggle="modal">Remove</a>
+                            <div id="modal-dialog<?= $user['id']?>" class="modal">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <a href="#" data-dismiss="modal" aria-hidden="true" class="close">×</a>
+                                            <h3>Are you sure you want to remove the following user?</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Name: <?= $user['name'] ?>  </p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href = "/delete/user/<?= $user['id'] ?>" name = "delete" value = "delete" class="btn btn-danger btn-sm col-md-2 col-md-offset-4">Remove</a>
+                                            <a href="#" data-dismiss="modal" aria-hidden="true" class="btn btn-primary btn-sm col-md-2">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                        
                         </div>
                     </div>
                     <?php

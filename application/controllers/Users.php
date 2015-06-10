@@ -53,24 +53,21 @@ class Users extends CI_Controller {
 		}
 		else
 		{
-			$user = $this->user->find_user_dashboard($this->input->post());
-			if($user)
+			if($this->session->userdata('user_level')=='admin')
 			{
 				$post = $this->input->post();
 				$this->user->update_user($post);
-				$this->session->set_userdata('name', $post['first_name'] . " " . $post['last_name']);
-				$this->session->set_flashdata('update_success', 'You have successfully updated your profile');
+				$this->session->set_flashdata('update_success', 'You have successfully updated the profile');
 			}
 			else
 			{
-				$this->session->set_flashdata('update_error','Incorrect Password');
+				$this->session->set_flashdata('update_error','You do not have access');
 			}
-			redirect("/Users/edit/$id")
+			redirect("/Users/edit/$id");
 		}
 	}
 	public function update_password_admin($id)
 	{
-		die('admin password update');
 		$this->load->model('user');
 		if($this->user->validate_admin_update_password($this->input->post())==FALSE)
 		{
@@ -79,19 +76,60 @@ class Users extends CI_Controller {
 		else
 		{	
 			$post = $this->input->post();
-			$post['password'] = $post['current_password'];
 			unset($post['confirm_new_password']);
-			$user = $this->user->find_user_dashboard($post);
-			if($user)
+			if($this->session->userdata('user_level')=='admin')
 			{
 				$this->user->update_password($post);
-				$this->session->set_flashdata('update_success', 'You have successfully updated your password');
+				$this->session->set_flashdata('update_success', 'You have successfully updated the password');
 			}
 			else
 			{
-				$this->session->set_flashdata('password_update_error','Incorrect Password');
+				$this->session->set_flashdata('password_update_error','You do not have access');
 			}
-			redirect("/Users/edit/$id")
+			redirect("/Users/edit/$id");
+		}
+	}
+
+	public function delete($id)
+	{
+		if($this->session->userdata('user_level')=='admin')
+		{
+			$this->load->model('user');
+			$this->user->delete_user($id);
+			$this->session->set_flashdata('delete_success', 'You have successfully deleted the user');
+		}
+		else
+		{
+			$this->session->set_flashdata('delete_user_error','You do not have access');
+		}
+		redirect('/Dashboards');
+	}
+
+	public function add_new_user()
+	{
+		if($this->session->userdata('user_level')=='admin')
+		{
+			$this->load->view('AddUser');
+		}
+		else
+		{
+			$this->session->set_flashdata('delete_user_error','You do not have access');
+			redirect('/Dashboards');
+		}
+			
+	}
+	public function add_new_user_process()
+	{
+		$this->load->model('user');
+		if($this->user->validate_reg($this->input->post())==FALSE)
+		{
+			$this->add_new_user();
+		}
+		else
+		{
+			$this->user->insert_user($this->input->post());
+			$this->session->set_flashdata('update_success', 'User successfully added');
+			redirect('/Dashboards');
 		}
 	}
 

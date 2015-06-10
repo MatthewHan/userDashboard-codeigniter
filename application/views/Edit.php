@@ -97,7 +97,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <div class="form-group">
                                         <textarea name="description" cols="20" rows="10" id="description" class="form-control message" style="height: 80px; overflow: hidden;" placeholder="Tell us about yourself!"><?php if($user['description']){echo $user['description'];} ?></textarea>
                                     </div>
-                                    <input type="hidden" name = "user_id" value = "<?= $this->session->userdata('id') ?>">
+                                    <input type="hidden" name = "user_id" value = "<?= $user['id'] ?>">
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">
@@ -148,7 +148,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <?php
                                         } ?>
                                     </div>
-                                    <input type="hidden" name = "user_id" value = "<?= $this->session->userdata('id') ?>">
+                                    <input type="hidden" name = "user_id" value = "<?= $user['id'] ?>">
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-sm-6 col-sm-offset-3">
