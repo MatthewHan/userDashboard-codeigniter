@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Profile</title>
+    <title>Edit User</title>
      <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <!-- Optional theme -->
@@ -14,6 +14,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <!-- Bootstrap specific javascript functions -->
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <link href="/assets/css/signin.css" rel="stylesheet">
+    <!-- CSS/JS for Bootstrap Select -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.2/css/bootstrap-select.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.2/js/bootstrap-select.min.js"></script>
+    <script>
+    $(document).ready(function(){
+        $('.selectpicker').selectpicker();
+        $('.selectpicker').selectpicker({
+        style: 'btn-info',
+        size: 4
+        });
+    })
+    </script>
 </head>
 <body>
     <!-- Navigation -->
@@ -74,6 +86,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-lg-12">
                                 <form id="update-form" action="/users/admin/update/<?= $user['id'] ?>" method="post" role="form">
                                     <div class="form-group">
+                                        <label for="first_name">First Name</label>
                                         <input type="text" name="first_name" id="first_name" tabindex="1" class="form-control" placeholder="First Name" value="<?= $user['first_name'] ?>" >
                                         <?php if(form_error('first_name')){?> 
                                         <span class="help-block alert alert-danger"><?= form_error('first_name') ?></span> 
@@ -81,6 +94,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         } ?>
                                     </div>
                                     <div class="form-group">
+                                        <label for="last_name">Last Name</label>
                                         <input type="text" name="last_name" id="last_name" tabindex="1" class="form-control" placeholder="Last Name" value="<?= $user['last_name'] ?>" >
                                         <?php if(form_error('last_name')){?> 
                                         <span class="help-block alert alert-danger"><?= form_error('last_name') ?></span> 
@@ -88,6 +102,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         } ?>
                                     </div>
                                     <div class="form-group">
+                                        <label for="email">Email</label>
                                         <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="<?= $user['email'] ?>" >
                                         <?php if(form_error('email')){?> 
                                         <span class="help-block alert alert-danger"><?= form_error('email') ?></span> 
@@ -95,6 +110,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         } ?>
                                     </div>
                                     <div class="form-group">
+                                        <label for="User Level">User Level</label>
+                                        <div class="selectContainer">
+                                            <select name="user_level" class="form-control selectpicker">
+                                                <?php if($user['user_level'] == 'admin')
+                                                { ?>  
+                                                    <option value="admin">Admin</option>
+                                                    <option value="general">General</option>
+                                                <?php } 
+                                                else 
+                                                { ?>
+                                                    <option value="general">General</option>
+                                                    <option value="admin">Admin</option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="Description">Description</label>
                                         <textarea name="description" cols="20" rows="10" id="description" class="form-control message" style="height: 80px; overflow: hidden;" placeholder="Tell us about yourself!"><?php if($user['description']){echo $user['description'];} ?></textarea>
                                     </div>
                                     <input type="hidden" name = "user_id" value = "<?= $user['id'] ?>">

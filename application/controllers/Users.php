@@ -56,7 +56,7 @@ class Users extends CI_Controller {
 			if($this->session->userdata('user_level')=='admin')
 			{
 				$post = $this->input->post();
-				$this->user->update_user($post);
+				$this->user->admin_update_user($post);
 				$this->session->set_flashdata('update_success', 'You have successfully updated the profile');
 			}
 			else

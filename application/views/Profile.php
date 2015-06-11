@@ -74,6 +74,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="col-lg-12">
                                 <form id="update-form" action="/update" method="post" role="form">
                                     <div class="form-group">
+                                        <label for="first_name">First Name</label>
                                         <input type="text" name="first_name" id="first_name" tabindex="1" class="form-control" placeholder="First Name" value="<?= $user['first_name'] ?>" >
                                         <?php if(form_error('first_name')){?> 
                                         <span class="help-block alert alert-danger"><?= form_error('first_name') ?></span> 
@@ -81,6 +82,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         } ?>
                                     </div>
                                     <div class="form-group">
+                                        <label for="last_name">Last Name</label>
                                         <input type="text" name="last_name" id="last_name" tabindex="1" class="form-control" placeholder="Last Name" value="<?= $user['last_name'] ?>" >
                                         <?php if(form_error('last_name')){?> 
                                         <span class="help-block alert alert-danger"><?= form_error('last_name') ?></span> 
@@ -88,6 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         } ?>
                                     </div>
                                     <div class="form-group">
+                                        <label for="email">Email</label>
                                         <input type="email" name="email" id="email" tabindex="1" class="form-control" placeholder="Email Address" value="<?= $user['email'] ?>" >
                                         <?php if(form_error('email')){?> 
                                         <span class="help-block alert alert-danger"><?= form_error('email') ?></span> 
@@ -95,6 +98,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         } ?>
                                     </div>
                                     <div class="form-group">
+                                        <label for="Description">Description</label>
                                         <textarea name="description" cols="20" rows="10" id="description" class="form-control message" style="height: 80px; overflow: hidden;" placeholder="Tell us about yourself!"><?php if($user['description']){echo $user['description'];} ?></textarea>
                                     </div>
                                     <div class="form-group">

@@ -107,6 +107,19 @@ class User extends CI_Model {
 		$values = array($post['first_name'],$post['last_name'],$post['email'],$post['description']);
 		$this->db->query($query,$values);
 	}
+	public function admin_update_user($post)
+	{
+		$query = "UPDATE users
+				  SET first_name = ?,
+				  	  last_name = ?,
+				  	  email = ?,
+				  	  description = ?,
+				  	  user_level = ?,
+				  	  updated_at = NOW()
+				  WHERE id = {$post['user_id']}";
+		$values = array($post['first_name'],$post['last_name'],$post['email'],$post['description'], $post['user_level']);
+		$this->db->query($query,$values);
+	}
 
 	public function update_password($post)
 	{
